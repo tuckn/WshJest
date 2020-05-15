@@ -1,0 +1,13 @@
+﻿<package>
+  <job id = "test:Jest">
+    <script language="JScript" src="./src/Jest.js"></script>
+    <script language="JScript" src="./src/Jest.test.js"></script>
+  </job>
+  <job id = "./dist/index.js">
+    <script language="JScript" src="./src/Jest.js"></script>
+  </job>
+  <job id = "test:builtJest">
+    <script language="JScript" src="./dist/index.js"></script>
+    <script language="JScript" src="./src/Jest.test.js"></script>
+  </job>
+</package>
