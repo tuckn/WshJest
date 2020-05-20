@@ -3,11 +3,11 @@
     <script language="JScript" src="./src/Jest.js"></script>
     <script language="JScript" src="./src/Jest.test.js"></script>
   </job>
-  <job id = "./dist/index.js">
+  <job id = "./dist/app.js">
     <script language="JScript" src="./src/Jest.js"></script>
   </job>
-  <job id = "test:builtJest">
-    <script language="JScript" src="./dist/index.js"></script>
+  <job id = "test:dist:app">
+    <script language="JScript" src="./dist/app.js"></script>
     <script language="JScript" src="./src/Jest.test.js"></script>
   </job>
 </package>

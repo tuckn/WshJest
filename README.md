@@ -14,7 +14,7 @@ D:\> cd MyWshProject
 (2) Download this ZIP and unzipping or Use bellowing `git` command.
 
 ```console
-> git clone https://github.com/tuckn/WshJest.git
+> git clone https://github.com/tuckn/WshJest.git ./WshModules/WshJest
 or
 > git submodule add https://github.com/tuckn/WshJest.git ./WshModules/WshJest
 ```
@@ -24,9 +24,10 @@ Now, The file structure is as
 ```console
 D:\MyWshProject\
 ├─ MyModule.js
-└─ WshJest\
-    └─ dist\
-      └─ index.js
+└─ WshModules\
+    └─ WshJest\
+        └─ dist\
+          └─ app.js
 ```
 
 ## Usage
@@ -38,9 +39,10 @@ D:\MyWshProject\
 ├─ Test.wsf  <- Create this
 ├─ MyModule.js
 ├─ MyModule.test.js <- Create this
-└─ WshJest\
-    └─ dist\
-      └─ index.js
+└─ WshModules\
+    └─ WshJest\
+        └─ dist\
+          └─ app.js
 ```
 
 (2) Write the above _Test.wsf_. For example, the following content
@@ -49,13 +51,13 @@ D:\MyWshProject\
 <package>
   <job id = "run">
     <script language="JScript" src="./MyModule.js"></script>
-    <script language="JScript" src="./WshJest/dist/index.js"></script>
+    <script language="JScript" src="./WshModules/WshJest/dist/app.js"></script>
     <script language="JScript" src="./MyModule.test.js"></script>
   </job>
 </package>
 ```
 
-Note that _.\WshJest\dist\index.js_ should be placed above your test .js file.
+Note that _.\WshJest\dist\app.js_ should be placed above your test .js file.
 And I recommend this .wsf file encoding to be UTF-8 [BOM, CRLF].
 
 (3) Now _MyModule.test.js_ (JScript ) can use the testing functions.
