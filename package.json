@@ -1,7 +1,7 @@
 {
   "name": "@tuckn/WshJest",
   "description": "The testing module for WSH (Windows Script Host).",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "author": "Tuckn <tuckn333+github@gmail.com>",
   "private": false,
   "license": "MIT",
@@ -15,12 +15,13 @@
   },
   "keywords": [
     "Windows",
+    "CLI",
     "WSH",
     "WSF",
     "JScript",
     "VBScript",
-    "module",
-    "polyfill"
+    "test",
+    "module"
   ],
   "files": [],
   "main": "",
@@ -32,7 +33,6 @@
     "lint:eslint": "eslint --ext js,ts .",
     "lint:prettier": "prettier -l \"**/*.{json,md,yml,yaml}\"",
     "lint:type": "tsc --noEmit",
-    "lint": "run-p lint:*",
     "test:name:toBe": "cscript //nologo ./Package.wsf //job:test:Jest -t toBe$",
     "test:name:toBeUndefined": "cscript //nologo ./Package.wsf //job:test:Jest -t toBeUndefined$",
     "test:name:toEqual": "cscript //nologo ./Package.wsf //job:test:Jest -t toEqual$",
@@ -40,7 +40,8 @@
     "test:name:toContainEqual": "cscript //nologo ./Package.wsf //job:test:Jest -t toContainEqual$",
     "test:Jest": "cscript //nologo ./Package.wsf //job:test:Jest",
     "build": "rimraf ./dist & wsh-packager bundle ./Package.wsf",
-    "test": "cscript //nologo ./Package.wsf //job:test:dist:app",
+    "test:dist:app": "cscript //nologo ./Package.wsf //job:test:dist:app",
+    "test": "run-s test:dist:*",
     "predocs": "rimraf ./docs",
     "docs:common": "jsdoc --configure ./jsdoc.json",
     "cp-docs-css": "cpx ./scripts/jsdoc.css ./docs/styles/",

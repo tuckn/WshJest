@@ -1,11 +1,18 @@
 ﻿<package>
+  <!-- dependencies -->
+
+  <!-- scripts: test -->
   <job id = "test:Jest">
     <script language="JScript" src="./src/Jest.js"></script>
     <script language="JScript" src="./src/Jest.test.js"></script>
   </job>
+
+  <!-- scripts: build -->
   <job id = "./dist/app.js">
     <script language="JScript" src="./src/Jest.js"></script>
   </job>
+
+  <!-- scripts: test dist -->
   <job id = "test:dist:app">
     <script language="JScript" src="./dist/app.js"></script>
     <script language="JScript" src="./src/Jest.test.js"></script>
