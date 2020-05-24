@@ -44,8 +44,8 @@
     "test": "run-s test:dist:*",
     "predocs": "rimraf ./docs",
     "docs:common": "jsdoc --configure ./jsdoc.json",
-    "cp-docs-css": "cpx ./scripts/jsdoc.css ./docs/styles/",
-    "cp-docs-img": "cpx ./assets/img ./docs/",
+    "cp-docs-css": "cpx ./assets/styles/jsdoc.css ./docs/styles/",
+    "cp-docs-img": "cpx ./assets/img/**/* ./docs/img/",
     "postdocs": "run-p cp-docs-*",
     "docs": "run-s docs:*"
   },
