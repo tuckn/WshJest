@@ -207,7 +207,7 @@ var expect;
   };
 
   var Test = function (name, fn) { // {{{
-    if (_reTestName && !_reTestName.test(_description + name)) {
+    if (_reTestName && !_reTestName.test(_description) && !_reTestName.test(name)) {
       _skippedCount += 1;
       return;
     }

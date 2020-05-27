@@ -1,7 +1,7 @@
 {
   "name": "@tuckn/WshJest",
   "description": "The testing module for WSH (Windows Script Host).",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "author": "Tuckn <tuckn333+github@gmail.com>",
   "private": false,
   "license": "MIT",
@@ -38,6 +38,7 @@
     "test:name:toEqual": "cscript //nologo ./Package.wsf //job:test:Jest -t toEqual$",
     "test:name:toContain": "cscript //nologo ./Package.wsf //job:test:Jest -t toContain$",
     "test:name:toContainEqual": "cscript //nologo ./Package.wsf //job:test:Jest -t toContainEqual$",
+    "test:name:anything": "cscript //nologo ./Package.wsf //job:test:Jest -t anything$",
     "test:Jest": "cscript //nologo ./Package.wsf //job:test:Jest",
     "build": "rimraf ./dist & wsh-packager bundle ./Package.wsf",
     "test:dist:app": "cscript //nologo ./Package.wsf //job:test:dist:app",

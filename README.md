@@ -2,6 +2,10 @@
 
 The testing module for WSH (Windows Script Host).
 
+## Operating environment
+
+Works on JScript in Windows.
+
 ## Installation
 
 (1) Create a directory of your WSH project.
@@ -111,6 +115,14 @@ Tests: 2 skipped, 2 passed, 4 total
 
 This string is to be must specify as RegExp. e.g. `"\w+Functions$"`.
 
+Note that if you use `^` in the Command-Prompt,
+you need to escape it at the caret itself.
+For example,
+
+```console
+> cscript //nologo .\Test.wsf -t "^^MyFooBar"
+```
+
 ### Expect Method Examples
 
 #### toBe, not.toBe
@@ -141,7 +153,7 @@ describe('Expect Methods', function() {
     expect(arrA).toBe(arrB); // ×
     expect(arrB).toBe(arrC); // √
 
-    // Object 
+    // Object
     var obj1 = { a: 'A' };
     var obj2 = { a: 'A' };
     var obj3 = obj2;
@@ -180,7 +192,7 @@ describe('Expect Methods', function() {
     expect(arrB).toEqual(arrC); // √
     expect([1, 2]).toEqual([1]); // ×
 
-    // Object 
+    // Object
     var obj1 = { a: 'A' };
     var obj2 = { a: 'A' };
     var obj3 = obj2;
