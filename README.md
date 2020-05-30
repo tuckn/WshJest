@@ -115,8 +115,7 @@ Tests: 2 skipped, 2 passed, 4 total
 
 This string is to be must specify as RegExp. e.g. `"\w+Functions$"`.
 
-Note that if you use `^` in the Command-Prompt,
-you need to escape it at the caret itself.
+Note that if you use `^` in the Command-Prompt, you need to escape it at the caret itself.
 For example,
 
 ```console

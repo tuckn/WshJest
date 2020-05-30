@@ -258,6 +258,8 @@ describe('Testing Jest', function () {
       { valA: [], valB: undefined, result: false },
       { valA: [1, 2, 3], valB: [1, 2, 3], result: true },
       { valA: [1, 2, 3], valB: [1, 2, 3, 4], result: false },
+      { valA: [1, NaN], valB: [1, NaN], result: true },
+      { valA: [1, Infinity], valB: [1, Infinity], result: true },
       { valA: [1, 2, 3], valB: 1, result: false },
       { valA: [1, [2], 3], valB: [1, [2], 3], result: true },
       { valA: [1, [2], 3], valB: [1, 2, 3], result: false },
@@ -305,7 +307,7 @@ describe('Testing Jest', function () {
       }
     ];
 
-    // @todo Add toContain, toContainEqual
+    // @TODO Add toContain, toContainEqual
 
     for (var i = 0, len = answers.length; i < len; i++) {
       if (answers[i].result) {

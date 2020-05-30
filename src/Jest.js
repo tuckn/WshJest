@@ -149,18 +149,18 @@ var expect;
   }; // }}}
 
   jest._equal = function (valA, valB) { // {{{
+    if (valB === ANYTHING_OBJ && valA !== undefined && valA !== null) return true;
     if (valA === valB) return true;
-    if (valB === ANYTHING_OBJ && valA !== undefined && valA !== null) {
-      return true;
-    }
 
+    var isNotEq;
     var typeValA = _protoTypeOf(valA); // caching
     var typeValB = _protoTypeOf(valB);
 
-    if (typeValA !== 'Array' && typeValA !== 'Object') return false;
-
+    // Array
     if (typeValA === 'Array' || typeValB === 'Array') {
-      if (typeValA !== 'Array' || typeValB !== 'Array') return false;
+      if (typeValA !== 'Array' || typeValB !== 'Array') {
+        return false;
+      }
 
       var lenA = valA.length;
       var lenB = valB.length;
@@ -171,19 +171,44 @@ var expect;
       for (var i = 0; i < lenA; i++) {
         if (!jest._equal(valA[i], valB[i])) return false;
       }
+      return true;
     }
 
+    // Number
+    if (typeValA === 'Number' || typeValB === 'Number') {
+      if (typeValA !== 'Number' || typeValB !== 'Number') {
+        return false;
+      }
+      return valA !== valA && valB !== valB; // `NaN !== NaN` is true
+    }
+
+    // String
+    if (typeValA === 'String' || typeValB === 'String') {
+      if (typeValA !== 'String' || typeValB !== 'String') {
+        return false;
+      }
+
+      return valA === valB;
+    }
+
+    // Object
     if (typeValA === 'Object' || typeValB === 'Object') {
       if (typeValA !== 'Object' || typeValB !== 'Object') return false;
+      if (typeValA !== typeValB) return false;
 
-      for (var propName in valA) {
-        if (Object.prototype.hasOwnProperty.call(valA, propName)) {
-          if (!jest._equal(valA[propName], valB[propName])) return false;
-        }
+      for (var propNameA in valA) {
+        if (!Object.prototype.hasOwnProperty.call(valB, propNameA)) return false;
+        if (!jest._equal(valA[propNameA], valB[propNameA])) return false;
       }
+
+      for (var propNameB in valB) {
+        if (!Object.prototype.hasOwnProperty.call(valA, propNameB)) return false;
+      }
+      return true;
     }
 
-    return true;
+    // Others
+    return false;
   }; // }}}
 
   WScript.Echo(String(WScript.ScriptFullName));
@@ -492,6 +517,6 @@ var expect;
   expect.anything = function () { // {{{
     return ANYTHING_OBJ;
   }; // }}}
-}());
+})();
 
 // vim:set foldmethod=marker commentstring=//%s :
