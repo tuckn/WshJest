@@ -1,18 +1,18 @@
-﻿/**
- * @file The testing module for WSH (Windows Script Host {@link https://docs.microsoft.com/en-us/previous-versions//9bbdkx3k(v=vs.85)|Microsoft Docs}). I recommend that JScript File Encoding is UTF-8[BOM, dos]
- * @description I thought to name this module "Test", But I chose "Jest". Because as but "Test" is a frequently used name and "T" and "J" look similar. On the other hand, this module is just a bit like {@link https://jestjs.io/|Jest}.
- * @requires wscript.exe/cscript.exe
- * @author Tuckn <tuckn333+github@gmail.com>
- * @license MIT
- * @see {@link https://github.com/tuckn/WshJest|GitHub}
- */
+﻿/* eslint no-unused-vars:off */
 
-/* eslint no-unused-vars:off */
+if (!jest) {
+  /**
+   * The wrapper object for Jest modules.
+   *
+   * @global
+   * @type {object}
+   */
+  var jest = {};
+}
 
-var jest = {}; // @todo Create mock
-var describe;
-var test;
-var expect;
+if (!describe) var describe;
+if (!test) var test;
+if (!expect) var expect;
 
 (function () {
   var ANYTHING_OBJ = { matching: 'null/undefined' };
@@ -213,6 +213,15 @@ var expect;
 
   WScript.Echo(String(WScript.ScriptFullName));
 
+  /**
+   * Creates a test blocks.
+   *
+   * @global
+   * @function describe
+   * @param {string} description - The description for test blocks.
+   * @param {Function} fn - The test function blocks.
+   * @returns {void}
+   */
   describe = function (description, fn) {
     _description = description;
     _skippedCount = 0;
@@ -261,17 +270,36 @@ var expect;
     }
   }; // }}}
 
+  /**
+   * Creates a test to run.
+   *
+   * @global
+   * @namespace test
+   * @param {string} name - The test name.
+   * @param {Function} fn - The test function block.
+   * @returns {Test}
+   */
   test = function (name, fn) {
     return new Test(name, fn);
   };
 
-  test.skip = function (received) {
+  /**
+   * @function skip
+   * @memberof test
+   * @returns {void}
+   */
+  test.skip = function () {
     _skippedCount += 1;
   };
 
   var Expect = function (received) { // {{{
     this.not = {};
 
+    /**
+     * @function arrayContaining
+     * @memberof expect
+     * @returns {void}
+     */
     this.arrayContaining = function (expected) { // {{{
       /** @todo {@link https://jestjs.io/docs/en/expect#expectarraycontainingarray} */
     };
@@ -280,6 +308,11 @@ var expect;
       /** @todo {@link https://jestjs.io/docs/en/expect#expectarraycontainingarray} */
     }; // }}}
 
+    /**
+     * @function toBe
+     * @memberof expect
+     * @returns {void}
+     */
     this.toBe = function (expected) { // {{{
       if (received === expected) {
         //
@@ -296,6 +329,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toBeNaN
+     * @memberof expect
+     * @returns {void}
+     */
     this.toBeNaN = function () { // {{{
       if (received !== received) {
         //
@@ -312,6 +350,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toBeGreaterThan
+     * @memberof expect
+     * @returns {void}
+     */
     this.toBeGreaterThan = function (expected) { // {{{
       if (received > expected) {
         //
@@ -344,6 +387,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toBeNull
+     * @memberof expect
+     * @returns {void}
+     */
     this.toBeNull = function () { // {{{
       if (received === null) {
         //
@@ -360,6 +408,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toBeTruthy
+     * @memberof expect
+     * @returns {void}
+     */
     this.toBeTruthy = function () { // {{{
       if (received == true) {
         //
@@ -376,6 +429,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toBeUndefined
+     * @memberof expect
+     * @returns {void}
+     */
     this.toBeUndefined = function () { // {{{
       if (received === undefined) {
         //
@@ -384,6 +442,11 @@ var expect;
       }
     };
 
+    /**
+     * @function toBeDefined
+     * @memberof expect
+     * @returns {void}
+     */
     this.toBeDefined = function () {
       if (received !== undefined) {
         //
@@ -392,6 +455,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toContain
+     * @memberof expect
+     * @returns {void}
+     */
     this.toContain = function (item) { // {{{
       if (received === undefined || received === null) {
         throw new Error('\nexpect(received).toContain(expected)\n'
@@ -418,6 +486,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toContainEqual
+     * @memberof expect
+     * @returns {void}
+     */
     this.toContainEqual = function (item) { // {{{
       if (jest._containsEqual(received, item)) {
         //
@@ -434,6 +507,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toEqual
+     * @memberof expect
+     * @returns {void}
+     */
     this.toEqual = function (expected) { // {{{
       if (jest._equal(received, expected)) {
         //
@@ -450,6 +528,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toHaveLength
+     * @memberof expect
+     * @returns {void}
+     */
     this.toHaveLength = function (expected) { // {{{
       var len = received.length;
       if (len === expected) {
@@ -468,6 +551,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function toMatch
+     * @memberof expect
+     * @returns {void}
+     */
     this.toMatch = function (regexpObj) { // {{{
       if (regexpObj.test(received)) {
         //
@@ -484,6 +572,11 @@ var expect;
       }
     }; // }}}
 
+    /**
+     * @function objectContaining
+     * @memberof expect
+     * @returns {void}
+     */
     this.objectContaining = function (expected) { // {{{
       /** @todo {link https://jestjs.io/docs/en/expect#expectobjectcontainingobject} */
     };
@@ -492,6 +585,11 @@ var expect;
       /** @todo {link https://jestjs.io/docs/en/expect#expectobjectcontainingobject} */
     }; // }}}
 
+    /**
+     * @function toThrowError
+     * @memberof expect
+     * @returns {void}
+     */
     this.toThrowError = function () { // {{{
       var errMsg = 'Expected throwing a error, but not did';
       try {
@@ -501,11 +599,24 @@ var expect;
         if (errMsg === e.message) throw new Error(errMsg);
       }
     };
+
+    /**
+     * @function toThrow
+     * @memberof expect
+     * @aliase toThrowError
+     * @returns {void}
+     */
     this.toThrow = function () {
       this.toThrowError();
     }; // }}}
   }; // }}}
 
+  /**
+   * @global
+   * @namespace expect
+   * @param {any} received
+   * @returns {Expect}
+   */
   expect = function (received) {
     // if (!received) {
     //   throw new Error('Expect takes at most one argument.');

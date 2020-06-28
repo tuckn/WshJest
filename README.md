@@ -1,6 +1,6 @@
 # WshJest
 
-The testing module for WSH (Windows Script Host).
+The testing module for WSH ({@link https://docs.microsoft.com/en-us/previous-versions//9bbdkx3k(v=vs.85)|Windows Script Host}). I thought to name this module "Test", But I chosed "Jest". Because as but "Test" is a frequently used name and "T" and "J" look similar. On the other hand, this module is just a bit like {@link https://jestjs.io/|Jest}.
 
 ## Operating environment
 
@@ -130,7 +130,7 @@ For example,
 
 ```js
 describe('Expect Methods', function() {
-  test('toBe', function() {
+  test('Be', function() {
     expect(undefined).toBe(undefined); // √
     expect(null).toBe(null); // √
 
@@ -164,11 +164,36 @@ describe('Expect Methods', function() {
   });
 ```
 
+#### toDefined, toBeUndefined
+
+```js
+describe('Expect Methods', function() {
+  test('Defined', function() {
+    var obj = { a: 'A' };
+
+    // toBeDefined
+    expect(undefined).toBeDefined(); // ×
+    expect(null).toBeDefined(); // √
+    expect('').toBeDefined(); // √
+    expect(obj).toBeUndefined(); // √
+    expect(obj.a).toBeUndefined(); // √
+    expect(obj.b).toBeUndefined(); // ×
+
+    // toBeUndefined
+    expect(undefined).toBeUndefined(); // √
+    expect(null).toBeUndefined(); // ×
+    expect('').toBeUndefined(); // ×
+    expect(obj).toBeUndefined(); // ×
+    expect(obj.a).toBeUndefined(); // ×
+    expect(obj.b).toBeUndefined(); // √
+  });
+```
+
 #### toEqual, not.toEqual
 
 ```js
 describe('Expect Methods', function() {
-  test('toEqual', function() {
+  test('Equal', function() {
     expect(undefined).toEqual(undefined); // √
     expect(null).toEqual(null); // √
 
@@ -210,7 +235,7 @@ Use for String and Array.
 
 ```js
 describe('Expect Methods', function() {
-  test('toContain', function() {
+  test('Contain', function() {
     expect(undefined).toContain(undefined); // throw a Errr
     expect(null).toContain(null); // throw a Error
 
@@ -246,7 +271,7 @@ Use for Array.
 
 ```js
 describe('Expect Methods', function() {
-  test('toContainEqual', function() {
+  test('ContainEqual', function() {
     expect(undefined).toContainEqual(undefined); // throw a Errr
     expect(null).toContainEqual(null); // throw a Error
 
@@ -277,16 +302,6 @@ describe('Expect Methods', function() {
     // toThrowError
     expect(new Error).toThrowError(); // √
     expect(function() { undefinedFunc(); }).toThrowError(); // √
-
-    // toBeUndefined
-    expect(undefined).toBeUndefined(); // √
-    expect(null).toBeUndefined(); // ×
-    expect('').toBeUndefined(); // ×
-
-    // toBeDefined
-    expect(undefined).toBeDefined(); // ×
-    expect(null).toBeDefined(); // √
-    expect('').toBeDefined(); // √
 
     // @TODO
     // toBeNaN, toBeGreaterThan, toBeTruthy, toHaveLength

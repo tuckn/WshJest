@@ -39,7 +39,7 @@ describe('Testing Jest', function () {
 
   // expect
 
-  test('toBe', function () {
+  test('Be', function () {
     var arr1 = [1];
     var arr2 = [1];
     var arr3 = arr2;
@@ -97,144 +97,49 @@ describe('Testing Jest', function () {
     }
   });
 
-  test('toBeUndefined', function () {
+  test('BeDefined', function () {
     var answers = [
-      { val: undefined, result: true },
-      { val: null, result: false },
-      { val: NaN, result: false },
-      { val: Infinity, result: false },
+      { val: undefined, isDefined: false },
+      { val: null, isDefined: true },
+      { val: NaN, isDefined: true },
+      { val: Infinity, isDefined: true },
       // Boolean
-      { val: true, result: false },
-      { val: false, result: false },
+      { val: false, isDefined: true },
+      { val: false, isDefined: true },
       // Number
-      { val: 0, result: false },
-      { val: 27, result: false },
-      { val: 3.17, result: false },
-      { val: -1, result: false },
+      { val: 0, isDefined: true },
+      { val: 27, isDefined: true },
+      { val: 3.17, isDefined: true },
+      { val: -1, isDefined: true },
       // String
-      { val: '0', result: false },
-      { val: '', result: false },
-      { val: ' ', result: false },
-      { val: 'Hello world!', result: false },
-      { val: 'こんにちは！', result: false },
+      { val: '0', isDefined: true },
+      { val: '', isDefined: true },
+      { val: ' ', isDefined: true },
+      { val: 'Hello world!', isDefined: true },
+      { val: 'こんにちは！', isDefined: true },
       // Array
-      { val: [], result: false },
-      { val: [1, 2, 3], result: false },
+      { val: [], isDefined: true },
+      { val: [1, 2, 3], isDefined: true },
       // Object
-      { val: {}, result: false },
-      { val: { a: 'A', b: 'B', result: false } },
-      { val: function () { return; }, result: false },
-      { val: new Error(), result: false },
-      { val: new Date(), result: false },
-      { val: new RegExp(''), result: false }
+      { val: {}, isDefined: true },
+      { val: { a: 'A', b: 'B' }, isDefined: true },
+      { val: WScript.FullName, isDefined: true },
+      { val: function () { return; }, isDefined: true },
+      { val: new Error(), isDefined: true },
+      { val: new Date(), isDefined: true },
+      { val: new RegExp(''), isDefined: true }
     ];
 
     for (var i = 0, len = answers.length; i < len; i++) {
-      if (answers[i].result) {
-        expect(answers[i].val).toBeUndefined();
-      } else {
+      if (answers[i].isDefined) {
         expect(answers[i].val).toBeDefined();
-      }
-    }
-  });
-
-  test('toContain', function () {
-    var item2 = [2];
-    var answers = [
-      { collection: undefined, target: undefined, result: 'Error' },
-      { collection: null, target: null, result: 'Error' },
-      // Boolean
-      { collection: true, target: true, result: false },
-      { collection: false, target: false, result: false },
-      // Number
-      { collection: 10, target: 10, result: false },
-      { collection: 10, target: 0, result: false },
-      // String
-      { collection: '', target: '', result: true },
-      { collection: 'I am Jest.', target: 'I am Jest.', result: true },
-      { collection: 'I am Jest.', target: 'Jest', result: true },
-      { collection: 'I am Jest.', target: 'jest', result: false },
-      // Array
-      { collection: [], target: null, result: false },
-      { collection: [], target: undefined, result: false },
-      { collection: [1, 2, 3], target: 2, result: true },
-      { collection: [1, 2, 3], target: 0, result: false },
-      { collection: [1, [2], 3], target: 2, result: false },
-      { collection: [1, [2], 3], target: [2], result: false },
-      { collection: [1, item2, 3], target: item2, result: true },
-      { collection: ['foo', 'bar', 'baz'], target: 'bar', result: true },
-      { collection: ['foo', 'bar', 'baz'], target: 'ba', result: false },
-      { collection: ['foo', 'bar', 'baz'], target: 'BAR', result: false },
-      { collection: ['foo', ['bar'], 'baz'], target: 'bar', result: false },
-      { collection: ['foo', ['bar'], 'baz'], target: 'bar', result: false },
-      { collection: ['A', { b: 'B' }], target: { b: 'B' }, result: false },
-      // Object
-      // Returns `false` when `collection` is `Object`
-      { collection: { a: 'A' }, target: 'a', result: false },
-      { collection: { a: 'A' }, target: 'A', result: false },
-      { collection: { a: 'A' }, target: { a: 'A' }, result: false }
-    ];
-
-    for (var i = 0, len = answers.length; i < len; i++) {
-      if (answers[i].result === 'Error') {
-        expect(answers[i].collection).toThrowError();
-      } else if (answers[i].result) {
-        expect(answers[i].collection).toContain(answers[i].target);
       } else {
-        expect(answers[i].collection).not.toContain(answers[i].target);
+        expect(answers[i].val).toBeUndefined();
       }
     }
   });
 
-  test('toContainEqual', function () {
-    var item2 = [2];
-    var answers = [
-      { collection: undefined, target: undefined, result: 'Error' },
-      { collection: null, target: null, result: 'Error' },
-      // Boolean
-      { collection: true, target: true, result: false },
-      { collection: false, target: false, result: false },
-      // Number
-      { collection: 10, target: 10, result: false },
-      { collection: 10, target: 0, result: false },
-      // String
-      // Returns `false` when `collection` is `String`. Differ from toContain
-      { collection: '', target: '', result: false },
-      { collection: 'I am Jest.', target: 'Jest', result: false },
-      { collection: 'I am Jest.', target: 'I am Jest.', result: false },
-      // Array
-      { collection: [], target: null, result: false },
-      { collection: [], target: undefined, result: false },
-      { collection: [1], target: [1], result: false },
-      { collection: [1, 2, 3], target: 2, result: true },
-      { collection: [1, 2, 3], target: 0, result: false },
-      { collection: [1, [2], 3], target: 2, result: false },
-      { collection: [1, [2], 3], target: [2], result: true }, // Diff from toContain
-      { collection: [1, item2, 3], target: item2, result: true },
-      { collection: ['foo', 'bar', 'baz'], target: 'bar', result: true },
-      { collection: ['foo', 'bar', 'baz'], target: 'ba', result: false },
-      { collection: ['foo', 'bar', 'baz'], target: 'BAR', result: false },
-      { collection: ['foo', ['bar'], 'baz'], target: 'bar', result: false },
-      { collection: ['A', { b: 'B' }], target: { b: 'B' }, result: true }, // Diff from toContain
-      // Object
-      // Returns `false` when `collection` is `Object`
-      { collection: { a: 'A' }, target: 'a', result: false },
-      { collection: { a: 'A' }, target: 'A', result: false },
-      { collection: { a: 'A' }, target: { a: 'A' }, result: false }
-    ];
-
-    for (var i = 0, len = answers.length; i < len; i++) {
-      if (answers[i].result === 'Error') {
-        expect(answers[i].collection).toThrowError();
-      } else if (answers[i].result) {
-        expect(answers[i].collection).toContainEqual(answers[i].target);
-      } else {
-        expect(answers[i].collection).not.toContainEqual(answers[i].target);
-      }
-    }
-  });
-
-  test('toEqual', function () {
+  test('Equal', function () {
     var item2 = [2];
     var answers = [
       { valA: undefined, valB: undefined, result: true },
@@ -283,6 +188,102 @@ describe('Testing Jest', function () {
         expect(answers[i].valA).toEqual(answers[i].valB);
       } else {
         expect(answers[i].valA).not.toEqual(answers[i].valB);
+      }
+    }
+  });
+
+  test('Contain', function () {
+    var item2 = [2];
+    var answers = [
+      { collection: undefined, target: undefined, result: 'Error' },
+      { collection: null, target: null, result: 'Error' },
+      // Boolean
+      { collection: true, target: true, result: false },
+      { collection: false, target: false, result: false },
+      // Number
+      { collection: 10, target: 10, result: false },
+      { collection: 10, target: 0, result: false },
+      // String
+      { collection: '', target: '', result: true },
+      { collection: 'I am Jest.', target: 'I am Jest.', result: true },
+      { collection: 'I am Jest.', target: 'Jest', result: true },
+      { collection: 'I am Jest.', target: 'jest', result: false },
+      // Array
+      { collection: [], target: null, result: false },
+      { collection: [], target: undefined, result: false },
+      { collection: [1, 2, 3], target: 2, result: true },
+      { collection: [1, 2, 3], target: 0, result: false },
+      { collection: [1, [2], 3], target: 2, result: false },
+      { collection: [1, [2], 3], target: [2], result: false },
+      { collection: [1, item2, 3], target: item2, result: true },
+      { collection: ['foo', 'bar', 'baz'], target: 'bar', result: true },
+      { collection: ['foo', 'bar', 'baz'], target: 'ba', result: false },
+      { collection: ['foo', 'bar', 'baz'], target: 'BAR', result: false },
+      { collection: ['foo', ['bar'], 'baz'], target: 'bar', result: false },
+      { collection: ['foo', ['bar'], 'baz'], target: 'bar', result: false },
+      { collection: ['A', { b: 'B' }], target: { b: 'B' }, result: false },
+      // Object
+      // Returns `false` when `collection` is `Object`
+      { collection: { a: 'A' }, target: 'a', result: false },
+      { collection: { a: 'A' }, target: 'A', result: false },
+      { collection: { a: 'A' }, target: { a: 'A' }, result: false }
+    ];
+
+    for (var i = 0, len = answers.length; i < len; i++) {
+      if (answers[i].result === 'Error') {
+        expect(answers[i].collection).toThrowError();
+      } else if (answers[i].result) {
+        expect(answers[i].collection).toContain(answers[i].target);
+      } else {
+        expect(answers[i].collection).not.toContain(answers[i].target);
+      }
+    }
+  });
+
+  test('ContainEqual', function () {
+    var item2 = [2];
+    var answers = [
+      { collection: undefined, target: undefined, result: 'Error' },
+      { collection: null, target: null, result: 'Error' },
+      // Boolean
+      { collection: true, target: true, result: false },
+      { collection: false, target: false, result: false },
+      // Number
+      { collection: 10, target: 10, result: false },
+      { collection: 10, target: 0, result: false },
+      // String
+      // Returns `false` when `collection` is `String`. Differ from toContain
+      { collection: '', target: '', result: false },
+      { collection: 'I am Jest.', target: 'Jest', result: false },
+      { collection: 'I am Jest.', target: 'I am Jest.', result: false },
+      // Array
+      { collection: [], target: null, result: false },
+      { collection: [], target: undefined, result: false },
+      { collection: [1], target: [1], result: false },
+      { collection: [1, 2, 3], target: 2, result: true },
+      { collection: [1, 2, 3], target: 0, result: false },
+      { collection: [1, [2], 3], target: 2, result: false },
+      { collection: [1, [2], 3], target: [2], result: true }, // Diff from toContain
+      { collection: [1, item2, 3], target: item2, result: true },
+      { collection: ['foo', 'bar', 'baz'], target: 'bar', result: true },
+      { collection: ['foo', 'bar', 'baz'], target: 'ba', result: false },
+      { collection: ['foo', 'bar', 'baz'], target: 'BAR', result: false },
+      { collection: ['foo', ['bar'], 'baz'], target: 'bar', result: false },
+      { collection: ['A', { b: 'B' }], target: { b: 'B' }, result: true }, // Diff from toContain
+      // Object
+      // Returns `false` when `collection` is `Object`
+      { collection: { a: 'A' }, target: 'a', result: false },
+      { collection: { a: 'A' }, target: 'A', result: false },
+      { collection: { a: 'A' }, target: { a: 'A' }, result: false }
+    ];
+
+    for (var i = 0, len = answers.length; i < len; i++) {
+      if (answers[i].result === 'Error') {
+        expect(answers[i].collection).toThrowError();
+      } else if (answers[i].result) {
+        expect(answers[i].collection).toContainEqual(answers[i].target);
+      } else {
+        expect(answers[i].collection).not.toContainEqual(answers[i].target);
       }
     }
   });
