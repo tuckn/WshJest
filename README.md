@@ -64,7 +64,7 @@ D:\MyWshProject\
 Note that _.\WshJest\dist\app.js_ should be placed above your test .js file.
 And I recommend this .wsf file encoding to be UTF-8 [BOM, CRLF].
 
-(3) Now _MyModule.test.js_ (JScript ) can use the testing functions.
+(3) Now _MyModule.test.js_ (JScript) can use the testing functions.
 `describe`, `test` and `expect`.
 For example,
 
