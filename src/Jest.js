@@ -421,6 +421,11 @@ if (!expect) var expect;
       }
     };
 
+    /**
+     * @function toBeFalsy
+     * @memberof expect
+     * @returns {void}
+     */
     this.toBeFalsy = function () {
       if (received == false) {
         //
