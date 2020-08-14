@@ -17,10 +17,10 @@ if (!expect) var expect;
 (function () {
   var ANYTHING_OBJ = { matching: 'null/undefined' };
   var _description;
-  var _skippedCount;
-  var _passedCount;
-  var _faledCount;
-  var _expectedCount;
+  var _skippedCounts;
+  var _passedCounts;
+  var _failedCounts;
+  var _expectedCounts;
   var _reTestName = (function () { // Set args {{{
     if (WScript.Arguments.length > 0) {
       var reTestPtn = new RegExp('^(-t|--testNamePattern)=(.+)$');
@@ -87,7 +87,7 @@ if (!expect) var expect;
       r = r.replace(/,\n$/, '\n');
       r += indent + ']';
 
-    // ErrortoString() displays only "[object Error]"
+    // Error toString() displays only "[object Error]"
     } else if (type === 'Error') {
       r = (!val.name ? 'Error' : String(val.name)) + ': ';
 
@@ -224,29 +224,29 @@ if (!expect) var expect;
    */
   describe = function (description, fn) {
     _description = description;
-    _skippedCount = 0;
-    _passedCount = 0;
-    _faledCount = 0;
+    _skippedCounts = 0;
+    _passedCounts = 0;
+    _failedCounts = 0;
 
     WScript.Echo('\n----------------------------\n' + description);
 
     fn();
 
     var resultMsg = '\nTests: ';
-    var totalCount = _skippedCount + _passedCount + _faledCount;
+    var totalCount = _skippedCounts + _passedCounts + _failedCounts;
 
-    if (_skippedCount !== 0) resultMsg += _skippedCount + ' skipped, ';
-    if (_passedCount !== 0) resultMsg += _passedCount + ' passed, ';
+    if (_skippedCounts !== 0) resultMsg += _skippedCounts + ' skipped, ';
+    if (_passedCounts !== 0) resultMsg += _passedCounts + ' passed, ';
     WScript.Echo(resultMsg + totalCount + ' total');
   };
 
   var Test = function (name, fn) { // {{{
     if (_reTestName && !_reTestName.test(_description) && !_reTestName.test(name)) {
-      _skippedCount += 1;
+      _skippedCounts += 1;
       return;
     }
 
-    _expectedCount = 0;
+    _expectedCounts = 0;
     var startTime;
     var endTime;
     var msec;
@@ -258,15 +258,15 @@ if (!expect) var expect;
 
       endTime = new Date();
       msec = endTime.getTime() - startTime.getTime();
-      WScript.Echo('  √ ' + name + ' (' + msec + 'ms ' + _expectedCount + 'exp)');
-      // WScript.Echo('  √ ' + name + ' (' + msec + 'ms) Fulfilled ' + _expectedCount + ' expectings');
-      _passedCount += 1;
+      WScript.Echo('  √ ' + name + ' (' + msec + 'ms ' + _expectedCounts + 'exp)');
+      // WScript.Echo('  √ ' + name + ' (' + msec + 'ms) Fulfilled ' + _expectedCounts + ' expecting');
+      _passedCounts += 1;
     } catch (e) {
       endTime = new Date();
       msec = endTime.getTime() - startTime.getTime();
-      WScript.Echo('  × ' + name + ' (' + msec + 'ms ' + (_expectedCount - 1) + 'exp)');
-      WScript.Echo('      No.' + _expectedCount + ' ' + String(e.message));
-      _faledCount += 1;
+      WScript.Echo('  × ' + name + ' (' + msec + 'ms ' + (_expectedCounts - 1) + 'exp)');
+      WScript.Echo('      No.' + _expectedCounts + ' ' + String(e.message));
+      _failedCounts += 1;
     }
   }; // }}}
 
@@ -289,31 +289,50 @@ if (!expect) var expect;
    * @returns {void}
    */
   test.skip = function () {
-    _skippedCount += 1;
+    _skippedCounts += 1;
   };
 
   var Expect = function (received) { // {{{
     this.not = {};
 
-    /**
-     * @function arrayContaining
-     * @memberof expect
-     * @returns {void}
-     */
-    this.arrayContaining = function (expected) { // {{{
-      /** @todo {@link https://jestjs.io/docs/en/expect#expectarraycontainingarray} */
-    };
+    // @TODO arrayContaining // {{{
+    // /**
+    //  * Checks whether a received array contains all of the elements in the expected array.
+    //  *
+    //  * @function arrayContaining
+    //  * @memberof expect
+    //  * @param {Array} - expected
+    //  * @returns {void}
+    //  */
+    // this.arrayContaining = function (expected) {
+    //   _expectedCounts += 1;
+    //   /** @todo {@link https://jestjs.io/docs/en/expect#expectarraycontainingarray} */
+    // };
+    //
+    // this.not.arrayContaining = function (expected) {
+    //   _expectedCounts += 1;
+    //   /** @todo {@link https://jestjs.io/docs/en/expect#expectarraycontainingarray} */
+    // }; // }}}
 
-    this.not.arrayContaining = function (expected) {
-      /** @todo {@link https://jestjs.io/docs/en/expect#expectarraycontainingarray} */
-    }; // }}}
-
+    // toBe {{{
     /**
+     * Checks whether a received value equals the expected value with string equality operator `===` .
+     *
+     * @example
+     * describe('Example toBe Test', () => {
+     *   test('Check a return of the return12Func', function () {
+     *     var retVal = return12Func();
+     *     expect(retVal).toBe(12);
+     *   });
+     * });
      * @function toBe
      * @memberof expect
+     * @param {any} expected
      * @returns {void}
      */
-    this.toBe = function (expected) { // {{{
+    this.toBe = function (expected) {
+      _expectedCounts += 1;
+
       if (received === expected) {
         //
       } else {
@@ -322,6 +341,8 @@ if (!expect) var expect;
     };
 
     this.not.toBe = function (expected) {
+      _expectedCounts += 1;
+
       if (received !== expected) {
         //
       } else {
@@ -329,12 +350,25 @@ if (!expect) var expect;
       }
     }; // }}}
 
+    // toBeNaN {{{
     /**
+     * Checks whether a received value is `NaN`.
+     *
+     * @example
+     * describe('Example toBeNaN Test', () => {
+     *   test('Check a return of the returnNullFunc', function () {
+     *     var retVal = returnNullFunc();
+     *     expect(retVal).toBeNull();
+     *   });
+     * });
      * @function toBeNaN
      * @memberof expect
+     * @param {void}
      * @returns {void}
      */
-    this.toBeNaN = function () { // {{{
+    this.toBeNaN = function () {
+      _expectedCounts += 1;
+
       if (received !== received) {
         //
       } else {
@@ -343,6 +377,8 @@ if (!expect) var expect;
     };
 
     this.not.toBeNaN = function () {
+      _expectedCounts += 1;
+
       if (received === received) {
         //
       } else {
@@ -356,6 +392,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toBeGreaterThan = function (expected) { // {{{
+      _expectedCounts += 1;
+
       if (received > expected) {
         //
       } else {
@@ -364,6 +402,8 @@ if (!expect) var expect;
     };
 
     this.toBeGreaterThanOrEqual = function (expected) {
+      _expectedCounts += 1;
+
       if (received >= expected) {
         //
       } else {
@@ -372,6 +412,8 @@ if (!expect) var expect;
     };
 
     this.toBeLessThanOrEqual = function (expected) {
+      _expectedCounts += 1;
+
       if (received <= expected) {
         //
       } else {
@@ -380,6 +422,8 @@ if (!expect) var expect;
     };
 
     this.toBeLessThan = function (expected) {
+      _expectedCounts += 1;
+
       if (received < expected) {
         //
       } else {
@@ -393,6 +437,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toBeNull = function () { // {{{
+      _expectedCounts += 1;
+
       if (received === null) {
         //
       } else {
@@ -401,6 +447,8 @@ if (!expect) var expect;
     };
 
     this.not.toBeNull = function () {
+      _expectedCounts += 1;
+
       if (received !== null) {
         //
       } else {
@@ -414,6 +462,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toBeTruthy = function () { // {{{
+      _expectedCounts += 1;
+
       if (received == true) {
         //
       } else {
@@ -427,6 +477,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toBeFalsy = function () {
+      _expectedCounts += 1;
+
       if (received == false) {
         //
       } else {
@@ -440,6 +492,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toBeUndefined = function () { // {{{
+      _expectedCounts += 1;
+
       if (received === undefined) {
         //
       } else {
@@ -453,6 +507,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toBeDefined = function () {
+      _expectedCounts += 1;
+
       if (received !== undefined) {
         //
       } else {
@@ -460,15 +516,27 @@ if (!expect) var expect;
       }
     }; // }}}
 
+    // toContain {{{
     /**
+     * Checks that an item is in an array. For testing the items in the array, this uses `===`, a strict equality check. `.toContain` can also check whether a string is a substring of another string.
+     *
+     * @example
+     * test('the flavor list contains lime', function () {
+     *   expect(getAllFlavors()).toContain('lime');
+     *   // If getAllFlavors() returns ['apple', 'lemon', 'lime'], pass the test.
+     *   // If getAllFlavors() returns 'apple lemon lime', pass the test.
+     * });
      * @function toContain
      * @memberof expect
+     * @param {string} item
      * @returns {void}
      */
-    this.toContain = function (item) { // {{{
+    this.toContain = function (item) {
+      _expectedCounts += 1;
+
       if (received === undefined || received === null) {
         throw new Error('\nexpect(received).toContain(expected)\n'
-          + 'Matcher error: received value must not be null nor undefined\n'
+          + 'Matcher error: received value must not be null or undefined\n'
           + 'Received has value: ' + _toDir(received));
       }
       if (jest._contains(received, item)) {
@@ -479,9 +547,11 @@ if (!expect) var expect;
     };
 
     this.not.toContain = function (item) {
+      _expectedCounts += 1;
+
       if (received === undefined || received === null) {
         throw new Error('\nexpect(received).toContain(expected)\n'
-          + 'Matcher error: received value must not be null nor undefined\n'
+          + 'Matcher error: received value must not be null or undefined\n'
           + 'Received has value: ' + _toDir(received));
       }
       if (!jest._contains(received, item)) {
@@ -497,6 +567,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toContainEqual = function (item) { // {{{
+      _expectedCounts += 1;
+
       if (jest._containsEqual(received, item)) {
         //
       } else {
@@ -505,6 +577,8 @@ if (!expect) var expect;
     };
 
     this.not.toContainEqual = function (item) {
+      _expectedCounts += 1;
+
       if (!jest._containsEqual(received, item)) {
         //
       } else {
@@ -518,6 +592,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toEqual = function (expected) { // {{{
+      _expectedCounts += 1;
+
       if (jest._equal(received, expected)) {
         //
       } else {
@@ -526,6 +602,8 @@ if (!expect) var expect;
     };
 
     this.not.toEqual = function (expected) {
+      _expectedCounts += 1;
+
       if (!jest._equal(received, expected)) {
         //
       } else {
@@ -539,6 +617,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toHaveLength = function (expected) { // {{{
+      _expectedCounts += 1;
+
       var len = received.length;
       if (len === expected) {
         //
@@ -548,6 +628,8 @@ if (!expect) var expect;
     };
 
     this.not.toHaveLength = function (expected) {
+      _expectedCounts += 1;
+
       var len = received.length;
       if (len !== expected) {
         //
@@ -556,12 +638,27 @@ if (!expect) var expect;
       }
     }; // }}}
 
+    // toMatch {{{
     /**
+     * Checks a string matches a regular expression.
+     *
+     * @example
+     * // Checks essayOnTheBestFlavor() returns
+     * describe('an essay on the best flavor', function () {
+     *   test('mentions grapefruit', function () {
+     *     expect(essayOnTheBestFlavor()).toMatch(/grapefruit/);
+     *     // or
+     *     expect(essayOnTheBestFlavor()).toMatch(new RegExp('grapefruit'));
+     *   });
+     * });
      * @function toMatch
      * @memberof expect
+     * @param {RegExp} regexpObj
      * @returns {void}
      */
-    this.toMatch = function (regexpObj) { // {{{
+    this.toMatch = function (regexpObj) {
+      _expectedCounts += 1;
+
       if (regexpObj.test(received)) {
         //
       } else {
@@ -570,12 +667,15 @@ if (!expect) var expect;
     };
 
     this.not.toMatch = function (regexpObj) {
+      _expectedCounts += 1;
+
       if (!regexpObj.test(received)) {
         //
       } else {
         throw new Error('Expected to be not ' + _toDir(regexpObj) + ', but ' + _toDir(received));
       }
-    }; // }}}
+    };
+    // }}}
 
     /**
      * @function objectContaining
@@ -583,10 +683,12 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.objectContaining = function (expected) { // {{{
+      _expectedCounts += 1;
       /** @todo {link https://jestjs.io/docs/en/expect#expectobjectcontainingobject} */
     };
 
     this.not.objectContaining = function (expected) {
+      _expectedCounts += 1;
       /** @todo {link https://jestjs.io/docs/en/expect#expectobjectcontainingobject} */
     }; // }}}
 
@@ -596,6 +698,8 @@ if (!expect) var expect;
      * @returns {void}
      */
     this.toThrowError = function () { // {{{
+      _expectedCounts += 1;
+
       var errMsg = 'Expected throwing a error, but not did';
       try {
         received();
@@ -608,10 +712,12 @@ if (!expect) var expect;
     /**
      * @function toThrow
      * @memberof expect
-     * @aliase toThrowError
+     * @alias toThrowError
      * @returns {void}
      */
     this.toThrow = function () {
+      _expectedCounts += 1;
+
       this.toThrowError();
     }; // }}}
   }; // }}}
@@ -626,7 +732,6 @@ if (!expect) var expect;
     // if (!received) {
     //   throw new Error('Expect takes at most one argument.');
     // }
-    _expectedCount += 1;
     return new Expect(received);
   };
 

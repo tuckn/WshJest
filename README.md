@@ -1,6 +1,8 @@
 # WshJest
 
-The testing module for WSH ({@link https://docs.microsoft.com/en-us/previous-versions//9bbdkx3k(v=vs.85)|Windows Script Host}). I thought to name this module "Test", But I chosed "Jest". Because as but "Test" is a frequently used name and "T" and "J" look similar. On the other hand, this module is just a bit like {@link https://jestjs.io/|Jest}.
+The testing module for [WSH][url1]. I thought to name this module "Test", But I chose "Jest". Because as but "Test" is a frequently used name and "T" and "J" look similar. On the other hand, this module is just a bit like [Jest](https://jestjs.io/).
+
+[url1]: https://docs.microsoft.com/ja-jp/previous-versions/windows/scripting/cc364455(v=msdn.10)?redirectedfrom=MSDN "Windows Script Host"
 
 ## Operating environment
 
@@ -69,19 +71,19 @@ And I recommend this .wsf file encoding to be UTF-8 [BOM, CRLF].
 For example,
 
 ```js
-describe('MyModule', function() {
-  test('Values', function() {
+describe('MyModule', function () {
+  test('Values', function () {
     // Compare primitive values or referential identity of object instances.
     expect(myVal1).toBe('MY_CONST_VAL');
     // Check an item that is in an array .
     expect(myVal2).toContain(2);
   });
 
-  test('Functions', function() {
+  test('Functions', function () {
     // Check a variable that is undefined.
     expect(myFunc1(3)).toBeUndefined();
     // Check a function throws when it is called.
-    expect(function() { myFunc1(null); }).toThrowError();
+    expect(function () { myFunc1(null); }).toThrowError();
   });
 });
 ```
@@ -129,8 +131,8 @@ For example,
 `toBe` is `if (A === B)`, `not.toBe` is `if (A !== B)`.
 
 ```js
-describe('Expect Methods', function() {
-  test('Be', function() {
+describe('Expect Methods', function () {
+  test('Be', function () {
     expect(undefined).toBe(undefined); // √
     expect(null).toBe(null); // √
 
@@ -167,8 +169,8 @@ describe('Expect Methods', function() {
 #### toDefined, toBeUndefined
 
 ```js
-describe('Expect Methods', function() {
-  test('Defined', function() {
+describe('Expect Methods', function () {
+  test('Defined', function () {
     var obj = { a: 'A' };
 
     // toBeDefined
@@ -192,8 +194,8 @@ describe('Expect Methods', function() {
 #### toEqual, not.toEqual
 
 ```js
-describe('Expect Methods', function() {
-  test('Equal', function() {
+describe('Expect Methods', function () {
+  test('Equal', function () {
     expect(undefined).toEqual(undefined); // √
     expect(null).toEqual(null); // √
 
@@ -234,9 +236,9 @@ describe('Expect Methods', function() {
 Use for String and Array.
 
 ```js
-describe('Expect Methods', function() {
-  test('Contain', function() {
-    expect(undefined).toContain(undefined); // throw a Errr
+describe('Expect Methods', function () {
+  test('Contain', function () {
+    expect(undefined).toContain(undefined); // throw a error
     expect(null).toContain(null); // throw a Error
 
     // String
@@ -270,9 +272,9 @@ describe('Expect Methods', function() {
 Use for Array.
 
 ```js
-describe('Expect Methods', function() {
-  test('ContainEqual', function() {
-    expect(undefined).toContainEqual(undefined); // throw a Errr
+describe('Expect Methods', function () {
+  test('ContainEqual', function () {
+    expect(undefined).toContainEqual(undefined); // throw a error
     expect(null).toContainEqual(null); // throw a Error
 
     // String -> All of them to be failed
@@ -297,11 +299,11 @@ describe('Expect Methods', function() {
 #### Other methods
 
 ```js
-describe('Expect Methods', function() {
-  test('others', function() {
+describe('Expect Methods', function () {
+  test('others', function () {
     // toThrowError
     expect(new Error).toThrowError(); // √
-    expect(function() { undefinedFunc(); }).toThrowError(); // √
+    expect(function () { undefinedFunc(); }).toThrowError(); // √
 
     // @TODO
     // toBeNaN, toBeGreaterThan, toBeTruthy, toHaveLength
@@ -311,6 +313,12 @@ describe('Expect Methods', function() {
 ## Documentation
 
 See all specifications [here](https://docs.tuckn.net/WshJest).
+
+## Example of Use
+
+- [WshFileSystem](https://github.com/tuckn/WshFileSystem/blob/master/src/FileSystem.test.js)
+- [WshPath](https://github.com/tuckn/WshPath/blob/master/src/Path.test.js)
+- [WshUtil](https://github.com/tuckn/WshUtil/blob/master/src/Util.test.js)
 
 ## License
 
