@@ -29,7 +29,7 @@ Now, The file structure is as
 
 ```console
 D:\MyWshProject\
-├─ MyModule.js
+├─ MyScript.js <- Your JScript code will be written in this.
 └─ WshModules\
     └─ WshJest\
         └─ dist\
@@ -38,13 +38,13 @@ D:\MyWshProject\
 
 ## Usage
 
-(1) If you want to test *MyModule.js*, create a new .wsf file and .js file for testing.
+(1) If you want to test *MyScript.js*, create a new .wsf file and .js file for testing.
 
 ```console
 D:\MyWshProject\
-├─ Test.wsf  <- Create this
-├─ MyModule.js
-├─ MyModule.test.js <- Create this
+├─ Test.wsf  <- Create this (Package file)
+├─ MyScript.js
+├─ MyScript.test.js <- Create this (Test code)
 └─ WshModules\
     └─ WshJest\
         └─ dist\
@@ -56,22 +56,22 @@ D:\MyWshProject\
 ```xml
 <package>
   <job id = "run">
-    <script language="JScript" src="./MyModule.js"></script>
+    <script language="JScript" src="./MyScript.js"></script>
     <script language="JScript" src="./WshModules/WshJest/dist/app.js"></script>
-    <script language="JScript" src="./MyModule.test.js"></script>
+    <script language="JScript" src="./MyScript.test.js"></script>
   </job>
 </package>
 ```
 
 Note that _.\WshJest\dist\app.js_ should be placed above your test .js file.
-And I recommend this WSH file (.wsf) encoding to be UTF-8 [BOM, CRLF].
+I recommend this WSH file (.wsf) encoding to be UTF-8 [BOM, CRLF].
 
 (3) Now, Your JScript (_MyModule.test.js_) can use the testing functions.
 `describe`, `test`, and `expect`.
 For example,
 
 ```js
-describe('MyModule', function () {
+describe('MyScript', function () {
   test('Values', function () {
     // Compare primitive values or referential identity of object instances.
     expect(myVal1).toBe('MY_CONST_VAL');
@@ -94,7 +94,7 @@ describe('MyModule', function () {
 > cscript //nologo .\Test.wsf
 
 ----------------------------
-MyModule
+MyScript
   √ Values (0ms 2exp)
   √ Functions (0ms 2exp)
 
@@ -103,13 +103,13 @@ Tests: 4 passed, 4 total
 
 ### Specifying test name
 
-Can use a argument `-t` or `--testNamePattern`.
+Can use the argument `-t` or `--testNamePattern`.
 
 ```console
 > cscript //nologo .\Test.wsf -t "Values"
 
 ----------------------------
-MyModule
+MyScript
   √ Values (0ms 2exp)
 
 Tests: 2 skipped, 2 passed, 4 total
