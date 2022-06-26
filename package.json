@@ -2,7 +2,7 @@
   "name": "@tuckn/WshJest",
   "description": "The testing module for WSH (Windows Script Host).",
   "version": "5.0.0",
-  "author": "Tuckn <tuckn333+github@gmail.com>",
+  "author": "Tuckn <tuckn333@gmail.com>",
   "private": false,
   "license": "MIT",
   "homepage": "https://docs.tuckn.net/WshJest",

@@ -17,7 +17,7 @@ D:\> mkdir MyWshProject
 D:\> cd MyWshProject
 ```
 
-(2) Download this ZIP and unzipping or Use bellowing `git` command.
+(2) Download this ZIP and unzip or Use the bellowing `git` command.
 
 ```console
 > git clone https://github.com/tuckn/WshJest.git ./WshModules/WshJest
@@ -64,10 +64,10 @@ D:\MyWshProject\
 ```
 
 Note that _.\WshJest\dist\app.js_ should be placed above your test .js file.
-And I recommend this .wsf file encoding to be UTF-8 [BOM, CRLF].
+And I recommend this WSH file (.wsf) encoding to be UTF-8 [BOM, CRLF].
 
-(3) Now _MyModule.test.js_ (JScript) can use the testing functions.
-`describe`, `test` and `expect`.
+(3) Now, Your JScript (_MyModule.test.js_) can use the testing functions.
+`describe`, `test`, and `expect`.
 For example,
 
 ```js
@@ -242,10 +242,10 @@ describe('Expect Methods', function () {
     expect(null).toContain(null); // throw a Error
 
     // String
-    expect('MY_CONST_VAL').not.toContain('MY_CONST_VAL'); // √
     expect('MY_CONST_VAL').toContain('CONST_VAL'); // √
     expect('MY_CONST_VAL').toContain('MY'); // √
     expect('MY_CONST_VAL').toContain('my'); // ×
+    expect('MY_CONST_VAL').not.toContain('Another_val'); // √
 
     // Array
     var arr1 = [1];
