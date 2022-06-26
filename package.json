@@ -1,7 +1,7 @@
 {
   "name": "@tuckn/WshJest",
   "description": "The testing module for WSH (Windows Script Host).",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "author": "Tuckn <tuckn333@gmail.com>",
   "private": false,
   "license": "MIT",
@@ -71,6 +71,7 @@
     "docdash": "^1.2.0",
     "eslint": "8.18.0",
     "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.3.3",
     "eslint-plugin-prettier": "4.0.0",
     "husky": "8.0.1",
