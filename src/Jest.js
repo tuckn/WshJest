@@ -109,15 +109,13 @@ if (!expect) var expect;
   jest._contains = function (collection, target) { // {{{
     var typeObjA = _protoTypeOf(collection); // caching
 
-    if (target === ANYTHING_OBJ
-        && collection !== undefined && collection !== null) {
+    if (target === ANYTHING_OBJ && collection !== undefined && collection !== null) {
       return true;
     } else if (typeObjA === 'String') {
       return (collection.indexOf(target) !== -1);
     } else if (typeObjA === 'Array') {
       for (var i = 0, len = collection.length; i < len; i++) {
-        if (target === ANYTHING_OBJ
-            && collection[i] !== undefined && collection[i] !== null) {
+        if (target === ANYTHING_OBJ && collection[i] !== undefined && collection[i] !== null) {
           return true;
         } else if (collection[i] === target) {
           return true;
@@ -387,14 +385,15 @@ if (!expect) var expect;
     }; // }}}
 
     /**
-     * @function toBeGreaterThan
+     * @function toBeGreaterThan {{{
      * @memberof expect
      * @returns {void}
      */
-    this.toBeGreaterThan = function (expected) { // {{{
+    this.toBeGreaterThan = function (expected) {
       _expectedCounts += 1;
 
-      if (received > expected) {
+      var len = received.length;
+      if (len > expected) {
         //
       } else {
         throw new Error('Expected to be greater than ' + expected + ', but ' + received);
@@ -404,7 +403,8 @@ if (!expect) var expect;
     this.toBeGreaterThanOrEqual = function (expected) {
       _expectedCounts += 1;
 
-      if (received >= expected) {
+      var len = received.length;
+      if (len >= expected) {
         //
       } else {
         throw new Error('Expected to be equal or greater than ' + expected + ', but ' + received);
@@ -414,7 +414,8 @@ if (!expect) var expect;
     this.toBeLessThanOrEqual = function (expected) {
       _expectedCounts += 1;
 
-      if (received <= expected) {
+      var len = received.length;
+      if (len <= expected) {
         //
       } else {
         throw new Error('Expected to be equal or less than ' + expected + ', but ' + received);
@@ -424,7 +425,8 @@ if (!expect) var expect;
     this.toBeLessThan = function (expected) {
       _expectedCounts += 1;
 
-      if (received < expected) {
+      var len = received.length;
+      if (len < expected) {
         //
       } else {
         throw new Error('Expected to be less than ' + expected + ', but ' + received);
