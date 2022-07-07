@@ -51,7 +51,7 @@
     "test": "run-s test:dist:*",
     "predocs": "rimraf ./docs",
     "docs:common": "jsdoc --configure ./jsdoc.json",
-    "cp-docs-css": "cpy ./assets/styles/jsdoc.css ./docs/styles/",
+    "cp-docs-css": "cpy --flat ./assets/styles/jsdoc.css ./docs/styles/",
     "cp-docs-img": "cpy ./assets/img/**/* ./docs/img/",
     "postdocs": "run-p cp-docs-*",
     "docs": "run-s docs:*"

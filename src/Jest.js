@@ -21,7 +21,8 @@ if (!expect) var expect;
   var _passedCounts;
   var _failedCounts;
   var _expectedCounts;
-  var _reTestName = (function () { // Set args {{{
+  var _reTestName = (function () {
+    // Set the arguments
     if (WScript.Arguments.length > 0) {
       var reTestPtn = new RegExp('^(-t|--testNamePattern)=(.+)$');
       var arg, matched;
@@ -37,17 +38,16 @@ if (!expect) var expect;
         }
       }
     }
-  })(); // }}}
+  })();
 
-  jest._protoTypeOf = function (val) { // {{{
+  jest._protoTypeOf = function (val) {
     if (val === undefined) return 'undefined';
     if (val === null) return 'null';
     return Object.prototype.toString.call(val).slice(8, -1);
   };
   var _protoTypeOf = jest._protoTypeOf; // Shorthand
-  // }}}
 
-  jest._toDir = function (val, indent) { // {{{
+  jest._toDir = function (val, indent) {
     indent = indent || '';
     var newIndent = '  ' + indent;
     var type = _protoTypeOf(val);
@@ -104,9 +104,8 @@ if (!expect) var expect;
     return r;
   };
   var _toDir = jest._toDir;
-  // }}}
 
-  jest._contains = function (collection, target) { // {{{
+  jest._contains = function (collection, target) {
     var typeObjA = _protoTypeOf(collection); // caching
 
     if (target === ANYTHING_OBJ && collection !== undefined && collection !== null) {
@@ -124,9 +123,9 @@ if (!expect) var expect;
     }
 
     return false;
-  }; // }}}
+  };
 
-  jest._containsEqual = function (collection, target) { // {{{
+  jest._containsEqual = function (collection, target) {
     var val;
 
     if (_protoTypeOf(collection) === 'Array') {
@@ -144,9 +143,9 @@ if (!expect) var expect;
     }
 
     return false;
-  }; // }}}
+  };
 
-  jest._equal = function (valA, valB) { // {{{
+  jest._equal = function (valA, valB) {
     if (valB === ANYTHING_OBJ && valA !== undefined && valA !== null) return true;
     if (valA === valB) return true;
 
@@ -207,7 +206,7 @@ if (!expect) var expect;
 
     // Others
     return false;
-  }; // }}}
+  };
 
   WScript.Echo(String(WScript.ScriptFullName));
 
@@ -238,7 +237,7 @@ if (!expect) var expect;
     WScript.Echo(resultMsg + totalCount + ' total');
   };
 
-  var Test = function (name, fn) { // {{{
+  var Test = function (name, fn) {
     if (_reTestName && !_reTestName.test(_description) && !_reTestName.test(name)) {
       _skippedCounts += 1;
       return;
@@ -266,7 +265,7 @@ if (!expect) var expect;
       WScript.Echo('      No.' + _expectedCounts + ' ' + String(e.message));
       _failedCounts += 1;
     }
-  }; // }}}
+  };
 
   /**
    * Creates a test to run.
@@ -290,10 +289,10 @@ if (!expect) var expect;
     _skippedCounts += 1;
   };
 
-  var Expect = function (received) { // {{{
+  var Expect = function (received) {
     this.not = {};
 
-    // @TODO arrayContaining // {{{
+    // @TODO arrayContaining
     // /**
     //  * Checks whether a received array contains all of the elements in the expected array.
     //  *
@@ -310,14 +309,14 @@ if (!expect) var expect;
     // this.not.arrayContaining = function (expected) {
     //   _expectedCounts += 1;
     //   /** @todo {@link https://jestjs.io/docs/en/expect#expectarraycontainingarray} */
-    // }; // }}}
+    // };
 
-    // toBe {{{
+    // toBe
     /**
      * Checks whether a received value equals the expected value with string equality operator `===` .
      *
      * @example
-     * describe('Example toBe Test', () => {
+     * describe('Example toBe Test', function () {
      *   test('Check a return of the return12Func', function () {
      *     var retVal = return12Func();
      *     expect(retVal).toBe(12);
@@ -346,14 +345,13 @@ if (!expect) var expect;
       } else {
         throw new Error('Expected not to be ' + expected + ', but ' + _toDir(received));
       }
-    }; // }}}
+    };
 
-    // toBeNaN {{{
     /**
      * Checks whether a received value is `NaN`.
      *
      * @example
-     * describe('Example toBeNaN Test', () => {
+     * describe('Example toBeNaN Test', function () {
      *   test('Check a return of the returnNullFunc', function () {
      *     var retVal = returnNullFunc();
      *     expect(retVal).toBeNull();
@@ -382,11 +380,12 @@ if (!expect) var expect;
       } else {
         throw new Error();
       }
-    }; // }}}
+    };
 
     /**
-     * @function toBeGreaterThan {{{
+     * @function toBeGreaterThan
      * @memberof expect
+     * @param {number} expected
      * @returns {void}
      */
     this.toBeGreaterThan = function (expected) {
@@ -400,6 +399,12 @@ if (!expect) var expect;
       }
     };
 
+    /**
+     * @function toBeGreaterThanOrEqual
+     * @memberof expect
+     * @param {number} expected
+     * @returns {void}
+     */
     this.toBeGreaterThanOrEqual = function (expected) {
       _expectedCounts += 1;
 
@@ -411,6 +416,12 @@ if (!expect) var expect;
       }
     };
 
+    /**
+     * @function toBeLessThanOrEqual
+     * @memberof expect
+     * @param {number} expected
+     * @returns {void}
+     */
     this.toBeLessThanOrEqual = function (expected) {
       _expectedCounts += 1;
 
@@ -422,6 +433,12 @@ if (!expect) var expect;
       }
     };
 
+    /**
+     * @function toBeLessThan
+     * @memberof expect
+     * @param {number} expected
+     * @returns {void}
+     */
     this.toBeLessThan = function (expected) {
       _expectedCounts += 1;
 
@@ -431,14 +448,14 @@ if (!expect) var expect;
       } else {
         throw new Error('Expected to be less than ' + expected + ', but ' + received);
       }
-    }; // }}}
+    };
 
     /**
      * @function toBeNull
      * @memberof expect
      * @returns {void}
      */
-    this.toBeNull = function () { // {{{
+    this.toBeNull = function () {
       _expectedCounts += 1;
 
       if (received === null) {
@@ -456,14 +473,14 @@ if (!expect) var expect;
       } else {
         throw new Error();
       }
-    }; // }}}
+    };
 
     /**
      * @function toBeTruthy
      * @memberof expect
      * @returns {void}
      */
-    this.toBeTruthy = function () { // {{{
+    this.toBeTruthy = function () {
       _expectedCounts += 1;
 
       if (received == true) {
@@ -486,14 +503,14 @@ if (!expect) var expect;
       } else {
         throw new Error();
       }
-    }; // }}}
+    };
 
     /**
      * @function toBeUndefined
      * @memberof expect
      * @returns {void}
      */
-    this.toBeUndefined = function () { // {{{
+    this.toBeUndefined = function () {
       _expectedCounts += 1;
 
       if (received === undefined) {
@@ -516,9 +533,8 @@ if (!expect) var expect;
       } else {
         throw new Error('Expected not to be undefined, But undefined.');
       }
-    }; // }}}
+    };
 
-    // toContain {{{
     /**
      * Checks that an item is in an array. For testing the items in the array, this uses `===`, a strict equality check. `.toContain` can also check whether a string is a substring of another string.
      *
@@ -561,14 +577,15 @@ if (!expect) var expect;
       } else {
         throw new Error('Expected to not contain ' + _toDir(item) + ' in ' + _toDir(received) + '. but is contained.');
       }
-    }; // }}}
+    };
 
     /**
      * @function toContainEqual
      * @memberof expect
+     * @param {string} item
      * @returns {void}
      */
-    this.toContainEqual = function (item) { // {{{
+    this.toContainEqual = function (item) {
       _expectedCounts += 1;
 
       if (jest._containsEqual(received, item)) {
@@ -586,14 +603,15 @@ if (!expect) var expect;
       } else {
         throw new Error('Expected to not contain ' + _toDir(item) + ' in ' + _toDir(received) + '. but is contained.');
       }
-    }; // }}}
+    };
 
     /**
      * @function toEqual
      * @memberof expect
+     * @param {number} expected
      * @returns {void}
      */
-    this.toEqual = function (expected) { // {{{
+    this.toEqual = function (expected) {
       _expectedCounts += 1;
 
       if (jest._equal(received, expected)) {
@@ -611,14 +629,15 @@ if (!expect) var expect;
       } else {
         throw new Error('Expected to be not ' + _toDir(expected) + ', but ' + _toDir(received));
       }
-    }; // }}}
+    };
 
     /**
      * @function toHaveLength
      * @memberof expect
+     * @param {number} expected
      * @returns {void}
      */
-    this.toHaveLength = function (expected) { // {{{
+    this.toHaveLength = function (expected) {
       _expectedCounts += 1;
 
       var len = received.length;
@@ -638,9 +657,8 @@ if (!expect) var expect;
       } else {
         throw new Error('Expected to not have ' + expected + ' length, but ' + len);
       }
-    }; // }}}
+    };
 
-    // toMatch {{{
     /**
      * Checks a string matches a regular expression.
      *
@@ -677,14 +695,8 @@ if (!expect) var expect;
         throw new Error('Expected to be not ' + _toDir(regexpObj) + ', but ' + _toDir(received));
       }
     };
-    // }}}
 
-    /**
-     * @function objectContaining
-     * @memberof expect
-     * @returns {void}
-     */
-    this.objectContaining = function (expected) { // {{{
+    this.objectContaining = function (expected) {
       _expectedCounts += 1;
       /** @todo {link https://jestjs.io/docs/en/expect#expectobjectcontainingobject} */
     };
@@ -692,14 +704,25 @@ if (!expect) var expect;
     this.not.objectContaining = function (expected) {
       _expectedCounts += 1;
       /** @todo {link https://jestjs.io/docs/en/expect#expectobjectcontainingobject} */
-    }; // }}}
+    };
 
     /**
+     * Use to test that a function throws when it is called.
+     *
+     * @example
+     * describe('Example toThrowError Test', function () {
+     *   test('fs.copyFileSync argument check', function () {
+     *     // @NOTE Enclose the test function with function
+     *     expect(function () {
+     *      fs.copyFileSync(null);
+     *     }).toThrowError();
+     *   });
+     * });
      * @function toThrowError
      * @memberof expect
      * @returns {void}
      */
-    this.toThrowError = function () { // {{{
+    this.toThrowError = function () {
       _expectedCounts += 1;
 
       var errMsg = 'Expected throwing a error, but not did';
@@ -712,6 +735,8 @@ if (!expect) var expect;
     };
 
     /**
+     * Alias of toThrowError
+     *
      * @function toThrow
      * @memberof expect
      * @alias toThrowError
@@ -721,8 +746,8 @@ if (!expect) var expect;
       _expectedCounts += 1;
 
       this.toThrowError();
-    }; // }}}
-  }; // }}}
+    };
+  };
 
   /**
    * @global
@@ -737,9 +762,9 @@ if (!expect) var expect;
     return new Expect(received);
   };
 
-  expect.anything = function () { // {{{
+  expect.anything = function () {
     return ANYTHING_OBJ;
-  }; // }}}
+  };
 })();
 
 // vim:set foldmethod=marker commentstring=//%s :
