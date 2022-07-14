@@ -288,8 +288,146 @@ describe('Testing Jest', function () {
     }
   });
 
+  test('toBeGreaterThan', function () {
+    var answers = [
+      // Error
+      { expected: undefined, target: 3, result: 'Error' },
+      { expected: null, target: 3, result: 'Error' },
+      { expected: true, target: 3, result: 'Error' },
+      { expected: false, target: 3, result: 'Error' },
+      { expected: 'I am Jest.', target: 3, result: 'Error' },
+      { expected: [1, 2, 3], target: 3, result: 'Error' },
+      { expected: { a: 'A' }, target: 3, result: 'Error' },
+      { expected: 0, target: 0, result: 'Error' },
+      { expected: 0, target: 1, result: 'Error' },
+      { expected: -3, target: -2, result: 'Error' },
+      { expected: -11, target: 10, result: 'Error' },
+      // Pass
+      { expected: 1, target: 0, result: true },
+      { expected: 1, target: -1, result: true },
+      { expected: -3, target: -5, result: true },
+      { expected: 12, target: 11, result: true }
+    ];
+
+    for (var i = 0, len = answers.length; i < len; i++) {
+      if (answers[i].result === 'Error') {
+        expect(function () {
+          expect(answers[i].expected).toBeGreaterThan(answers[i].target);
+        }).toThrowError();
+      } else {
+        expect(answers[i].expected).toBeGreaterThan(answers[i].target);
+      }
+    }
+  });
+
+  test('toBeGreaterThanOrEqual', function () {
+    var answers = [
+      // Error
+      { expected: undefined, target: 3, result: 'Error' },
+      { expected: null, target: 3, result: 'Error' },
+      { expected: true, target: 3, result: 'Error' },
+      { expected: false, target: 3, result: 'Error' },
+      { expected: 'I am Jest.', target: 3, result: 'Error' },
+      { expected: [1, 2, 3], target: 3, result: 'Error' },
+      { expected: { a: 'A' }, target: 3, result: 'Error' },
+      { expected: 0, target: 1, result: 'Error' },
+      { expected: -3, target: -2, result: 'Error' },
+      { expected: -11, target: 10, result: 'Error' },
+      // Pass
+      { expected: 0, target: 0, result: true },
+      { expected: -3, target: -3, result: true },
+      { expected: 1, target: 0, result: true },
+      { expected: 1, target: -1, result: true },
+      { expected: -3, target: -5, result: true },
+      { expected: 12, target: 11, result: true }
+    ];
+
+    for (var i = 0, len = answers.length; i < len; i++) {
+      if (answers[i].result === 'Error') {
+        expect(function () {
+          expect(answers[i].expected).toBeGreaterThanOrEqual(answers[i].target);
+        }).toThrowError();
+      } else {
+        expect(answers[i].expected).toBeGreaterThanOrEqual(answers[i].target);
+      }
+    }
+  });
+
+  test('toBeLessThanOrEqual', function () {
+    var answers = [
+      // Error
+      { expected: undefined, target: 3, result: 'Error' },
+      { expected: null, target: 3, result: 'Error' },
+      { expected: true, target: 3, result: 'Error' },
+      { expected: false, target: 3, result: 'Error' },
+      { expected: 'I am Jest.', target: 3, result: 'Error' },
+      { expected: [1, 2, 3], target: 3, result: 'Error' },
+      { expected: { a: 'A' }, target: 3, result: 'Error' },
+      { expected: 1, target: 0, result: 'Error' },
+      { expected: -2, target: -3, result: 'Error' },
+      { expected: 10, target: -11, result: 'Error' },
+      // Pass
+      { expected: 0, target: 0, result: true },
+      { expected: -1, target: 0, result: true },
+      { expected: -3, target: -3, result: true },
+      { expected: 0, target: 1, result: true },
+      { expected: -1, target: 1, result: true },
+      { expected: -5, target: -3, result: true },
+      { expected: 11, target: 12, result: true }
+    ];
+
+    for (var i = 0, len = answers.length; i < len; i++) {
+      if (answers[i].result === 'Error') {
+        expect(function () {
+          expect(answers[i].expected).toBeLessThanOrEqual(answers[i].target);
+        }).toThrowError();
+      } else {
+        expect(answers[i].expected).toBeLessThanOrEqual(answers[i].target);
+      }
+    }
+  });
+
+  test('toBeLessThan', function () {
+    var answers = [
+      // Error
+      { expected: undefined, target: 3, result: 'Error' },
+      { expected: null, target: 3, result: 'Error' },
+      { expected: true, target: 3, result: 'Error' },
+      { expected: false, target: 3, result: 'Error' },
+      { expected: 'I am Jest.', target: 3, result: 'Error' },
+      { expected: [1, 2, 3], target: 3, result: 'Error' },
+      { expected: { a: 'A' }, target: 3, result: 'Error' },
+      { expected: 0, target: 0, result: 'Error' },
+      { expected: 1, target: 0, result: 'Error' },
+      { expected: -2, target: -3, result: 'Error' },
+      { expected: 10, target: -11, result: 'Error' },
+      // Pass
+      { expected: 0, target: 1, result: true },
+      { expected: -1, target: 1, result: true },
+      { expected: -5, target: -3, result: true },
+      { expected: 11, target: 12, result: true }
+    ];
+
+    for (var i = 0, len = answers.length; i < len; i++) {
+      if (answers[i].result === 'Error') {
+        expect(function () {
+          expect(answers[i].expected).toBeLessThan(answers[i].target);
+        }).toThrowError();
+      } else {
+        expect(answers[i].expected).toBeLessThan(answers[i].target);
+      }
+    }
+  });
+
+  test('toHaveLength', function () {
+    expect('@TODO').toBe('Tested');
+  });
+
+  test('toMatch', function () {
+    expect('@TODO').toBe('Tested');
+  });
+
   test('anything', function () {
-    var item2 = [2];
     var answers = [
       { valA: undefined, valB: expect.anything(), result: false },
       { valA: null, valB: expect.anything(), result: false },
@@ -307,8 +445,6 @@ describe('Testing Jest', function () {
         result: true
       }
     ];
-
-    // @TODO Add toContain, toContainEqual
 
     for (var i = 0, len = answers.length; i < len; i++) {
       if (answers[i].result) {

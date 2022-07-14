@@ -208,6 +208,12 @@ if (!expect) var expect;
     return false;
   };
 
+  jest._checkTypeIsNumber = function (functionName, varName, val) {
+    if (_protoTypeOf(val) !== 'Number')
+      throw new Error(functionName + ': ' + varName + ' value ' + val + ' is not a Number');
+  };
+
+
   WScript.Echo(String(WScript.ScriptFullName));
 
   /**
@@ -391,8 +397,11 @@ if (!expect) var expect;
     this.toBeGreaterThan = function (expected) {
       _expectedCounts += 1;
 
-      var len = received.length;
-      if (len > expected) {
+      var FN = 'toBeGreaterThan';
+      jest._checkTypeIsNumber(FN, 'expected', expected);
+      jest._checkTypeIsNumber(FN, 'received', received);
+
+      if (received > expected) {
         //
       } else {
         throw new Error('Expected to be greater than ' + expected + ', but ' + received);
@@ -408,8 +417,11 @@ if (!expect) var expect;
     this.toBeGreaterThanOrEqual = function (expected) {
       _expectedCounts += 1;
 
-      var len = received.length;
-      if (len >= expected) {
+      var FN = 'toBeGreaterThanOrEqual';
+      jest._checkTypeIsNumber(FN, 'expected', expected);
+      jest._checkTypeIsNumber(FN, 'received', received);
+
+      if (received >= expected) {
         //
       } else {
         throw new Error('Expected to be equal or greater than ' + expected + ', but ' + received);
@@ -425,8 +437,11 @@ if (!expect) var expect;
     this.toBeLessThanOrEqual = function (expected) {
       _expectedCounts += 1;
 
-      var len = received.length;
-      if (len <= expected) {
+      var FN = 'toBeLessThanOrEqual';
+      jest._checkTypeIsNumber(FN, 'expected', expected);
+      jest._checkTypeIsNumber(FN, 'received', received);
+
+      if (received <= expected) {
         //
       } else {
         throw new Error('Expected to be equal or less than ' + expected + ', but ' + received);
@@ -442,8 +457,11 @@ if (!expect) var expect;
     this.toBeLessThan = function (expected) {
       _expectedCounts += 1;
 
-      var len = received.length;
-      if (len < expected) {
+      var FN = 'toBeLessThan';
+      jest._checkTypeIsNumber(FN, 'expected', expected);
+      jest._checkTypeIsNumber(FN, 'received', received);
+
+      if (received < expected) {
         //
       } else {
         throw new Error('Expected to be less than ' + expected + ', but ' + received);
