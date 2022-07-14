@@ -1,7 +1,7 @@
 {
   "name": "@tuckn/WshJest",
   "description": "The testing module for WSH (Windows Script Host).",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "author": "Tuckn <tuckn333@gmail.com>",
   "funding": {
     "type": "github",
@@ -44,6 +44,12 @@
     "test:name:Equal": ".\\scripts\\Test Jest -t Equal$",
     "test:name:Contain": ".\\scripts\\Test Jest -t Contain$",
     "test:name:ContainEqual": ".\\scripts\\Test Jest -t ContainEqual$",
+    "test:name:toBeGreaterThan": ".\\scripts\\Test Jest -t toBeGreaterThan$",
+    "test:name:toBeGreaterThanOrEqual": ".\\scripts\\Test Jest -t toBeGreaterThanOrEqual$",
+    "test:name:toBeLessThanOrEqual": ".\\scripts\\Test Jest -t toBeLessThanOrEqual$",
+    "test:name:toBeLessThan": ".\\scripts\\Test Jest -t toBeLessThan$",
+    "test:name:toHaveLength": ".\\scripts\\Test Jest -t toHaveLength$",
+    "test:name:toMatch": ".\\scripts\\Test Jest -t toMatch$",
     "test:name:anything": ".\\scripts\\Test Jest -t anything$",
     "test:Jest": ".\\scripts\\Test Jest",
     "build": "rimraf ./dist & wsh-packager bundle ./Package.wsf",
