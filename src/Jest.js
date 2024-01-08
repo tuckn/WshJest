@@ -62,7 +62,8 @@ if (!expect) var expect;
       r = 'false';
     } else if (val === Infinity) {
       r = 'Infinity';
-    } else if (typeof(val) === 'unknown') { /* eslint valid-typeof: "off" */
+    } else if (typeof val === 'unknown') {
+      /* eslint valid-typeof: "off" */
       r = val;
     } else if (type === 'String') {
       r = '"' + val + '"';
@@ -108,13 +109,21 @@ if (!expect) var expect;
   jest._contains = function (collection, target) {
     var typeObjA = _protoTypeOf(collection); // caching
 
-    if (target === ANYTHING_OBJ && collection !== undefined && collection !== null) {
+    if (
+      target === ANYTHING_OBJ &&
+      collection !== undefined &&
+      collection !== null
+    ) {
       return true;
     } else if (typeObjA === 'String') {
       return (collection.indexOf(target) !== -1);
     } else if (typeObjA === 'Array') {
       for (var i = 0, len = collection.length; i < len; i++) {
-        if (target === ANYTHING_OBJ && collection[i] !== undefined && collection[i] !== null) {
+        if (
+          target === ANYTHING_OBJ &&
+          collection[i] !== undefined &&
+          collection[i] !== null
+        ) {
           return true;
         } else if (collection[i] === target) {
           return true;
@@ -134,7 +143,11 @@ if (!expect) var expect;
 
         if (_protoTypeOf(val) === 'Array' || _protoTypeOf(val) === 'Object') {
           if (jest._equal(val, target)) return true;
-        } else if (target === ANYTHING_OBJ && val !== undefined && val !== null) {
+        } else if (
+          target === ANYTHING_OBJ &&
+          val !== undefined &&
+          val !== null
+        ) {
           return true;
         } else if (val === target) {
           return true;
@@ -209,8 +222,11 @@ if (!expect) var expect;
   };
 
   jest._checkTypeIsNumber = function (functionName, varName, val) {
-    if (_protoTypeOf(val) !== 'Number')
-      throw new Error(functionName + ': ' + varName + ' value ' + val + ' is not a Number');
+    if (_protoTypeOf(val) !== 'Number') {
+      throw new Error(
+        functionName + ': ' + varName + ' value ' + val + ' is not a Number'
+      );
+    }
   };
 
 
@@ -244,7 +260,11 @@ if (!expect) var expect;
   };
 
   var Test = function (name, fn) {
-    if (_reTestName && !_reTestName.test(_description) && !_reTestName.test(name)) {
+    if (
+      _reTestName &&
+      !_reTestName.test(_description) &&
+      !_reTestName.test(name)
+    ) {
       _skippedCounts += 1;
       return;
     }

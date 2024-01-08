@@ -37,9 +37,9 @@
     "openGraph": {
       "title": "WshJest",
       "type": "website",
-      "image": "https://docs.tuckn.net/WshJest/img/openGraph-image.png",
+      "image": "https://assets.tuckn.net/docs/WshJest/img/openGraph-image.png",
       "site_name": "@tuckn/WshJest",
-      "url": "https://docs.tuckn.net/WshJest"
+      "url": "https://assets.tuckn.net/docs/WshJest"
     },
     "meta": {
       "title": "WshJest",

@@ -1,6 +1,6 @@
 # WshJest
 
-The testing module for [WSH][url1]. I thought to name this module "Test", But I chose "Jest". Because as but "Test" is a frequently used name and "T" and "J" look similar. On the other hand, this module is just a bit like [Jest](https://jestjs.io/).
+The testing module for [WSH][url1]. I thought to name this module "Test", But I chose "Jest". Because "Test" is a frequently used name, and "T" and "J" look similar. On the other hand, this module is just a bit like [Jest](https://jestjs.io/).
 
 [url1]: https://docs.microsoft.com/ja-jp/previous-versions/windows/scripting/cc364455(v=msdn.10)?redirectedfrom=MSDN "Windows Script Host"
 
@@ -17,7 +17,7 @@ D:\> mkdir MyWshProject
 D:\> cd MyWshProject
 ```
 
-(2) Download this ZIP and unzip or Use the bellowing `git` command.
+(2) Download and unzip this ZIP or Use the bellowing `git` command.
 
 ```console
 > git clone https://github.com/tuckn/WshJest.git ./WshModules/WshJest
@@ -115,7 +115,7 @@ MyScript
 Tests: 2 skipped, 2 passed, 4 total
 ```
 
-This string is to be must specify as RegExp. e.g. `"\w+Functions$"`.
+This string is to be specified as RegExp. e.g. `"\w+Functions$"`.
 
 Note that if you use `^` in the Command-Prompt, you need to escape it at the caret itself.
 For example,
@@ -312,7 +312,7 @@ describe('Expect Methods', function () {
 
 ## Documentation
 
-See all specifications [here](https://docs.tuckn.net/WshJest).
+See all specifications [here](https://assets.tuckn.net/docs/WshJest).
 
 ## Example of Use
 

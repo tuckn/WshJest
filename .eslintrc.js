@@ -2,12 +2,8 @@
 module.exports = {
   root: true,
   ignorePatterns: [
-    './assets/',
-    './coverage/',
-    './dist/',
-    './node_modules/',
-    './WshModules/',
-    '!*.js',
+    '**/*.js',
+    '!src/**/*.js',
   ],
   env: {
     browser: true,
@@ -27,7 +23,7 @@ module.exports = {
     'ScriptEngineBuildVersion': false,
     'Enumerator': false,
     'GetObject': false,
-    'VBArray': false
+    'VBArray': false,
   },
   rules: {
     'array-bracket-spacing': ['warn', 'never'],
@@ -41,7 +37,7 @@ module.exports = {
     'func-call-spacing': ['error', 'never'],
     'indent': ['warn', 2, {
         'flatTernaryExpressions': true,
-        'MemberExpression': 2
+        'MemberExpression': 2,
     }],
     'key-spacing': ['error', { 'afterColon': true }],
     'keyword-spacing': ['warn'],
@@ -55,8 +51,8 @@ module.exports = {
         'warn', {
             'vars': 'all',
             'args': 'after-used',
-            'ignoreRestSiblings': false
-        }
+            'ignoreRestSiblings': false,
+        },
     ],
     'object-curly-spacing': ['warn', 'always'],
     'operator-linebreak': ['warn', 'before'],
@@ -68,9 +64,9 @@ module.exports = {
     'space-before-function-paren': ['warn', 'always'],
     'spaced-comment': ['warn', 'always', {
         'exceptions': ['-', '+', '/'],
-        'markers': ['/']
+        'markers': ['/'],
     }],
     'space-in-parens': ['warn', 'never'],
-    'space-infix-ops': 'warn'
+    'space-infix-ops': 'warn',
   },
 };
