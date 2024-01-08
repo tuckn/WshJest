@@ -8,36 +8,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-  steps:
-    - name: Check out
-    - uses: actions/checkout@v3
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
 
-    - name: Rebuild docs
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12'
-    - run: npm install
-    - run: npm run docs
-    - run: npx insert-gtag tag-manager ./docs ${{ secrets.GTM_CONTAINER_ID }}
+      - name: Rebuild docs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - name: Connect Azure
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - run: npm install
+      - run: npm run docs
+      - run: npx insert-gtag tag-manager ./docs ${{ secrets.GTM_CONTAINER_ID }}
 
-    - name: Upload docs
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
+      - name: Connect Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Upload docs
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob delete-batch --source '$web' --pattern docs/WshJest/* --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --auth-mode key
             az storage blob upload-batch --destination '$web/docs/WshJest' --source ./docs --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --auth-mode key
 
-    - name: Purge CDN endpoint
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az afd endpoint purge --content-paths '/docs/WshJest/*' --profile-name ${{ secrets.AFD_PROFILE_NAME }} --endpoint-name ${{ secrets.AFD_ENDPOINT_NAME }} --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} --subscription ${{ secrets.SUBSCRIPTION_NAME }} --domains assets.tuckn.net
+      - name: Purge CDN endpoint
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az afd endpoint purge --content-paths '/docs/WshJest/*' --profile-name ${{ secrets.AFD_PROFILE_NAME }} --endpoint-name ${{ secrets.AFD_ENDPOINT_NAME }} --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} --subscription ${{ secrets.SUBSCRIPTION_ID }} --domains assets.tuckn.net
 
-  # Azure logout
-    - name: logout
-      run: az logout
-      if: always()
+      - name: logout
+        if: always()
+        run: az logout
+
+      - run: az cache purge
+      - run: az account clear
